@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { AppProvider } from './context/AppContext';
 import Quiz from './components/Quiz/Quiz';
-import GearRecommendations from './components/GearRecommendations/GearRecommendations';
 import Auth from './components/Auth/Auth';
 import { useApp } from './context/AppContext';
 import Background3D from './components/Background3D';
 
 const AppContent: React.FC = () => {
-  const { recommendedGear, user } = useApp();
+  const { user } = useApp();
   const [showAuth, setShowAuth] = useState(false);
 
   return (
@@ -42,13 +41,7 @@ const AppContent: React.FC = () => {
         </header>
 
         <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-          {showAuth ? (
-            <Auth />
-          ) : recommendedGear.length > 0 ? (
-            <GearRecommendations items={recommendedGear} />
-          ) : (
-            <Quiz />
-          )}
+          {showAuth ? <Auth /> : <Quiz />}
         </main>
       </div>
     </div>

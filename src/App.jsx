@@ -10,7 +10,6 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import TrailList from './pages/TrailList';
 import TrailDetail from './pages/TrailDetail';
-import GearGuide from './pages/GearGuide';
 import Community from './pages/Community';
 import TrailMap from './pages/TrailMap';
 import TrailPlanner from './pages/TrailPlanner';
@@ -103,7 +102,6 @@ function AppRoutes() {
           />
           <Route path="/trails" element={<TrailList />} />
           <Route path="/trails/:id" element={<TrailDetail />} />
-          <Route path="/gear" element={<GearGuide />} />
           <Route path="/community" element={<Community />} />
           <Route path="/map" element={<TrailMap />} />
           <Route path="/planner" element={<TrailPlanner />} />

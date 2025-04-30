@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
@@ -8,7 +8,21 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { login, googleSignIn } = useAuth();
+  const location = useLocation();
+  const { login, googleSignIn, user } = useAuth();
+  
+  // Check for return URL in localStorage first (for persistence), then fallback to location state
+  const storedReturnUrl = localStorage.getItem('authReturnUrl');
+  const returnUrl = storedReturnUrl || location.state?.returnUrl || '/profile';
+
+  // Redirect if user is already logged in
+  useEffect(() => {
+    if (user) {
+      // User is already logged in, redirect to return URL
+      localStorage.removeItem('authReturnUrl');
+      navigate(returnUrl);
+    }
+  }, [user, navigate, returnUrl]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +36,11 @@ const Login = () => {
     try {
       setLoading(true);
       await login(email, password);
-      navigate('/profile');
+      
+      // Clear the stored return URL after successful login
+      localStorage.removeItem('authReturnUrl');
+      
+      navigate(returnUrl);
     } catch (err) {
       setError(err.message || 'Failed to sign in');
       console.error(err);
@@ -35,7 +53,11 @@ const Login = () => {
     try {
       setLoading(true);
       await googleSignIn();
-      navigate('/profile');
+      
+      // Clear the stored return URL after successful login
+      localStorage.removeItem('authReturnUrl');
+      
+      navigate(returnUrl);
     } catch (err) {
       setError(err.message || 'Failed to sign in with Google');
       console.error(err);

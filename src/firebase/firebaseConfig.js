@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, connectAuthEmulator } from "firebase/auth";
+import { getAuth, connectAuthEmulator, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { getStorage, connectStorageEmulator } from "firebase/storage";
 import { getAnalytics, isSupported } from "firebase/analytics";
@@ -40,6 +40,15 @@ const initializeFirebaseWithTimeout = async (timeoutMs = 10000) => {
         // Initialize Firebase services
         auth = getAuth(app);
         console.log('Firebase auth initialized');
+        
+        // Set persistence to LOCAL right after auth initialization
+        setPersistence(auth, browserLocalPersistence)
+          .then(() => {
+            console.log('Firebase auth persistence set to LOCAL');
+          })
+          .catch((error) => {
+            console.error('Error setting auth persistence:', error);
+          });
         
         db = getFirestore(app);
         console.log('Firebase Firestore initialized');

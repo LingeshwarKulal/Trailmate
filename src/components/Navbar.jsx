@@ -244,6 +244,23 @@ export default function Navbar() {
                     Profile
                   </Link>
                 </motion.div>
+                <motion.div 
+                  whileHover="hover" 
+                  whileTap="tap" 
+                  variants={linkVariants}
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  <Link
+                    to="/profile/orders"
+                    className={`px-3 py-2 rounded-md text-sm font-medium ${
+                      location.pathname === '/profile/orders'
+                        ? 'text-teal-400 bg-slate-800/50'
+                        : 'text-slate-300 hover:text-teal-400 hover:bg-slate-800/30'
+                    } transition-colors`}
+                  >
+                    Orders
+                  </Link>
+                </motion.div>
                 <motion.button
                   onClick={handleLogout}
                   className="px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-teal-400 hover:bg-slate-800/30 transition-colors"
@@ -397,6 +414,22 @@ export default function Navbar() {
                       onClick={() => setIsOpen(false)}
                     >
                       Profile
+                    </Link>
+                  </motion.div>
+                  <motion.div 
+                    variants={mobileItemVariants}
+                    style={{ transformStyle: "preserve-3d" }}
+                  >
+                    <Link
+                      to="/profile/orders"
+                      className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                        location.pathname === '/profile/orders'
+                          ? 'text-teal-400 bg-slate-800/50'
+                          : 'text-slate-300 hover:text-teal-400 hover:bg-slate-800/30'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      Orders
                     </Link>
                   </motion.div>
                   <motion.div 

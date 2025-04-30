@@ -15,6 +15,9 @@ import TrailMap from './pages/TrailMap';
 import TrailPlanner from './pages/TrailPlanner';
 import Explore from './pages/Explore';
 import NotFound from './pages/NotFound';
+import ForgotPassword from './pages/ForgotPassword';
+import Admin from './pages/Admin';
+import SavedTrails from './pages/SavedTrails';
 import ProtectedRoute from './components/ProtectedRoute';
 
 // Error boundary component for auth errors
@@ -92,6 +95,7 @@ function AppRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route 
             path="/profile" 
             element={
@@ -102,10 +106,33 @@ function AppRoutes() {
           />
           <Route path="/trails" element={<TrailList />} />
           <Route path="/trails/:id" element={<TrailDetail />} />
+          <Route 
+            path="/saved-trails" 
+            element={
+              <ProtectedRoute>
+                <SavedTrails />
+              </ProtectedRoute>
+            } 
+          />
           <Route path="/community" element={<Community />} />
           <Route path="/map" element={<TrailMap />} />
-          <Route path="/planner" element={<TrailPlanner />} />
+          <Route 
+            path="/planner" 
+            element={
+              <ProtectedRoute>
+                <TrailPlanner />
+              </ProtectedRoute>
+            } 
+          />
           <Route path="/explore" element={<Explore />} />
+          <Route 
+            path="/admin" 
+            element={
+              <ProtectedRoute>
+                <Admin />
+              </ProtectedRoute>
+            } 
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </SimpleLayout>
